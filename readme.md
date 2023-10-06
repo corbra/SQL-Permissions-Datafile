@@ -1,7 +1,7 @@
 ## Getting Started
 
-    Powershell Script to assist implementing a simple SQL access strategy. 
-    Access is configured through a powershell psd1 data file. The file contains hashtable profiles. Each profile can be setup to configure:
+    Powershell Script to implement a simple SQL access strategy. 
+    Access is configured declaratively through a powershell psd1 data file. The file contains hashtable profiles. Each profile can be setup to configure:
     - Target SQl Instances and databases
     - New Server level roles with
         - Server Level Permissions
