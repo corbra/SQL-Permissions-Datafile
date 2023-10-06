@@ -12,6 +12,7 @@
 
     The RemoveExisting property is used to remove/clean existing roles targeted in the script. 
     Once created, the function Set-LoginMappings can be used to create a simple mapping of logins/users to roles.
+    
 - Prerequisite
     - [dbatools](https://dbatools.io/download/) 
         - Install-Module dbatools -Scope CurrentUser
