@@ -2,7 +2,7 @@
     
 Powershell Script to implement a simple SQL access strategy using the [dbatools](https://dbatools.io/download/) module. 
 
-Access is configured declaratively through a powershell psd1 data file. The file contains hashtable profiles. Each profile can be setup to configure:
+Access is configured declaratively through a powershell [psd1 data file](Sample_PermissionsTemplate.psd1) . The file contains hashtable profiles. Each profile can be setup to configure:
 - Target SQl Instances and databases
 - New Server level roles with
     - Server Level Permissions
