@@ -16,13 +16,14 @@ Once created, the function Set-LoginMappings can be used to create a simple mapp
     
 - Prerequisite
     - [dbatools](https://dbatools.io/download/) 
-        - Install-Module dbatools -Scope CurrentUser
+        - Install-Module dbatools -Scope CurrentUse
 
-- [Sample Template](Sample_PermissionsTemplate.psd1) 
-    - PowerShell data file
+- Sample PowerShell data file Template
+    - [Template](Sample_PermissionsTemplate.psd1) 
     - Contains a hash table of keys and values specifiying the permissions to apply
 
-- [Sample execution script](Start-Import.ps1) 
+- Sample execution script 
+    - [execution script](Start-Import.ps1) 
 
 
 ## Usage scenarios
