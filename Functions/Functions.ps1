@@ -197,8 +197,9 @@ param (
             $Roles_ = Get-DbaDbRole -SqlInstance $_SqlInstance -Role $_Mapping.Value 
             $Database_ =  $Roles_.Database | Get-Unique
 
+            New-DbaLogin -SqlInstance $_SqlInstance -Login  $_Mapping.Name -PasswordPolicyEnforced -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference | out-null
+
             if($Database_.count -gt 0){
-                New-DbaLogin -SqlInstance $_SqlInstance -Login  $_Mapping.Name -PasswordPolicyEnforced -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference | out-null
                 New-DatabaseUser -SqlInstance $_SqlInstance -Database  $Database_ -Login $_Mapping.Name -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference  | out-null
                 Add-DbaDbRoleMember -SqlInstance $_SqlInstance -Database  $Database_ -Role $_Mapping.Value -User $_Mapping.Name -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference  | out-null
             }
