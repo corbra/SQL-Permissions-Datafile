@@ -152,7 +152,10 @@ Function Set-LoginMappings{
     Hashtable Login -> Role mapping.   
 .PARAMETER MapServerLevel
     Switch.  If the role exists at server level, add the login.
-.PARAMETER RemoveExisting
+.PARAMETER ForceLogins
+    If login exists, drop and recreate
+.PARAMETER ForceUsers
+    If user exists, drop and recreate.
 .OUTPUTS
     TODO
 .NOTES
@@ -179,16 +182,9 @@ param (
     [Parameter(Mandatory=$true)]
     [hashtable]$Mapping,
     [switch]$MapServerLevel,
-    [switch]$RemoveExisting
+    [switch]$ForceLogins,
+    [switch]$ForceUsers
 )
-
-    if($RemoveExisting){
-        $SqlInstance | ForEach-Object {
-            Stop-DbaProcess -SqlInstance $_ -Login $Mapping.Keys -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference
-        }
-        Remove-DbaDbUser -SqlInstance $SqlInstance -User $Mapping.Keys -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference  | out-null
-        Remove-DbaLogin -SqlInstance $SqlInstance -Login $Mapping.Keys -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference  | out-null
-    }
 
     foreach ($_SqlInstance in $SqlInstance ){
 
@@ -197,10 +193,10 @@ param (
             $Roles_ = Get-DbaDbRole -SqlInstance $_SqlInstance -Role $_Mapping.Value 
             $Database_ =  $Roles_.Database | Get-Unique
 
-            New-DbaLogin -SqlInstance $_SqlInstance -Login  $_Mapping.Name -PasswordPolicyEnforced -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference | out-null
+            New-DbaLogin -SqlInstance $_SqlInstance -Login  $_Mapping.Name -PasswordPolicyEnforced -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference -Force:$ForceLogins | out-null
 
             if($Database_.count -gt 0){
-                New-DatabaseUser -SqlInstance $_SqlInstance -Database  $Database_ -Login $_Mapping.Name -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference  | out-null
+                New-DbaDbUser -SqlInstance $_SqlInstance -Database  $Database_ -Login $_Mapping.Name -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference -Force:$ForceUsers  | out-null
                 Add-DbaDbRoleMember -SqlInstance $_SqlInstance -Database  $Database_ -Role $_Mapping.Value -User $_Mapping.Name -Whatif:$WhatIfPreference -Confirm:$ConfirmPreference  | out-null
             }
 
