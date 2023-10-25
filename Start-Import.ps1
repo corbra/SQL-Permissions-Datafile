@@ -32,7 +32,7 @@ $Mapping = @{
     "DOMAIN\Testers" = "tester"
     "DOMAIN\Developers" = "developer"
 }
-Set-LoginMappings -SqlInstance $SQLInstance -Mapping $Mapping -RemoveExisting -MapServerLevel -confirm:$false
+Set-LoginMappings -SqlInstance $SQLInstance -Mapping $Mapping -ForceLogins -ForceUsers -MapServerLevel -confirm:$false
 
 Write-Host "Show Reports" -ForegroundColor Magenta
 # Show Reports
